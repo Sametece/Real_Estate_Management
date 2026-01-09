@@ -1,16 +1,13 @@
 using System;
 using RealEstate.Entity.Abstract;
-using RealEstate.Entity.Concrete;
 
-namespace RealEstate.Entity.Enum;
+namespace RealEstate.Entity.Concrete;
 
-public class PropertyType : BaseClass
+public class PropertyType:BaseClass
 {
-    public string Name { get; set; } = string.Empty;
+   public string Name { get; set; } = null!;
+    public string? Description { get; set; }
 
-    public string? Description {get; set;} 
-
-    //navi
-
-    public ICollection<Property> Properties {get; set;} = [];
+    // Navigation
+    public ICollection<EProperty>  EProperties { get; set; } = []; 
 }

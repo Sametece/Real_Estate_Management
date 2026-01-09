@@ -4,25 +4,18 @@ using RealEstate.Entity.Enum;
 
 namespace RealEstate.Entity.Concrete;
 
-public class Inquiry : BaseClass
+public class Inquiry:BaseClass
 {
-   public string Name { get; set; } = string.Empty;
+  public string Name { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string? Phone { get; set; }
+    public string Message { get; set; } = null!;
 
-   public string Email { get; set; } = string.Empty;
+    public InquiryStatus Status { get; set; } 
 
-   public string? Phone { get; set; }
-
-   public string Message { get; set; } = string.Empty;
-
-   // Durum
-    public InquiryStatus Status { get; set; }
-
-    // İlişkiler
     public int PropertyId { get; set; }
-    public Property Property { get; set; } = null!;
+    public EProperty Property { get; set; } = null!;
 
     public int? UserId { get; set; }                       
     public AppUser? User { get; set; }
-
-    
 }
