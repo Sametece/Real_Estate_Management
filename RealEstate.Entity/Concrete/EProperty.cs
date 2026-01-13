@@ -32,9 +32,9 @@ public class EProperty:BaseClass
     public string AgentId { get; set; } = null!;
 
     // Navi proplar
-    public PropertyType PropertyType { get; set; } = null!;
-    public AppUser Agent { get; set; } = null!;
-    public ICollection<PropertyImage> Images { get; set; } =  [];
-    public ICollection<Inquiry> Inquiries { get; set; } = [];
+    public PropertyType? PropertyType { get; set; } = null!;
+   // public AppUser Agent { get; set; } = null!;
+    public ICollection<PropertyImage>? Images { get; set; } =  [];
+    public ICollection<Inquiry>? Inquiries { get; set; } = [];
 }
 

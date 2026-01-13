@@ -10,5 +10,5 @@ public class PropertyImage:BaseClass
     public bool IsPrimary { get; set; }
 
    public int PropertyId { get; set; } 
-   public EProperty Property { get; set; } = null! ;
+   public EProperty? Property { get; set; } = null! ;
 }

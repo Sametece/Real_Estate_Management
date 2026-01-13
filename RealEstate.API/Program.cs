@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using RealEstate.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+//Db Ayarları
+var connectionString = builder.Configuration.GetConnectionString("SqliteConnection");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("Connection string 'SqliteConnection' bulunamadı!");
+}
+builder.Services.AddDbContext<RealEstateDbContext>(options => options.UseSqlite(connectionString));
+
+
+
+
+
+
 
 var app = builder.Build();
 

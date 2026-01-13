@@ -14,8 +14,8 @@ public class Inquiry:BaseClass
     public InquiryStatus Status { get; set; } 
 
     public int PropertyId { get; set; }
-    public EProperty Property { get; set; } = null!;
+    public EProperty? Property { get; set; } = null!;
 
     public int? UserId { get; set; }                       
-    public AppUser? User { get; set; }
+   // public AppUser? User { get; set; }
 }
