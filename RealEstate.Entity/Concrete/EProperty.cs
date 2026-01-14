@@ -29,7 +29,7 @@ public class EProperty:BaseClass
 
     // FK
     public int PropertyTypeId { get; set; }
-    public string AgentId { get; set; } = null!;
+    public int AgentId { get; set; } 
 
     // Navi proplar
     public PropertyType? PropertyType { get; set; } = null!;

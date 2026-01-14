@@ -1,5 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using RealEstate.Entity.Concrete;
 using RealEstate.Entity.Enum;
 
@@ -17,17 +18,24 @@ public class RealEstateDbContext : DbContext
    public DbSet<PropertyType> propertyTypes {get; set;}
 
    public DbSet<PropertyImage> propertyImages { get; set; }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
 
         modelBuilder.Entity<EProperty>()
                                        .HasQueryFilter(x => !x.IsDeleted); // Soft Delete için
    
-      #region Emlak Tipleri
+      
+        #region Emlak Tipleri
              
-             var propertyType = new PropertyType []
+             var propertyTypes = new PropertyType []
              {
                  new PropertyType { Id =1 , Name = "Daire", Description = "Satılık Daire ", CreatedAt =new DateTime(2026,01,09)},
                  new PropertyType { Id = 2, Name = "Daire", Description= "Kiralık Daire", CreatedAt =new DateTime(2026,01,09)  },
@@ -37,17 +45,14 @@ public class RealEstateDbContext : DbContext
                  new PropertyType{ Id = 6, Name = "Arsa", Description= "Satılık Arsa", CreatedAt =new DateTime(2026,01,09)   },
                  new PropertyType{Id = 7, Name = "İşyeri", Description= "Kiralık İşyeri", CreatedAt =new DateTime(2026,01,09)}
              };
-
-
              modelBuilder.Entity<PropertyType>().HasData(propertyTypes);
-
 
         #endregion
 
-
         #region Emlak İlanı
 
-        var  eProperty = new EProperty []
+
+        var  eProperties = new EProperty []
         {
             new EProperty
             {
@@ -65,6 +70,7 @@ public class RealEstateDbContext : DbContext
         Status = PropertyStatus.Available,
         PropertyTypeId = 1, // Satılık Daire
         CreatedAt = new DateTime(2026,01,09),
+        AgentId = 1,
         IsDeleted = false
          },
            new EProperty
@@ -83,6 +89,7 @@ public class RealEstateDbContext : DbContext
         Status = PropertyStatus.Rented,
         PropertyTypeId = 2, // Kiralık Daire
         CreatedAt = new DateTime(2026,01,09),
+        AgentId = 2,
         IsDeleted = false
          },
            new EProperty
@@ -101,6 +108,7 @@ public class RealEstateDbContext : DbContext
         Status = PropertyStatus.Rented,
         PropertyTypeId = 3, // Kiralık Villa
         CreatedAt = new DateTime(2026,01,09),
+        AgentId = 2,
         IsDeleted = false
          },
           new EProperty
@@ -119,15 +127,16 @@ public class RealEstateDbContext : DbContext
         Status = PropertyStatus.Sold,
         PropertyTypeId = 4, // Satılık Dükkan
         CreatedAt = new DateTime(2026,01,09),
+        AgentId = 3,
         IsDeleted = false
          }
          };
 
-
        modelBuilder.Entity<EProperty>().HasData(eProperties);
    
         #endregion
-       
+
+
         #region Emlak Resimleri
          
          modelBuilder.Entity<PropertyImage>().HasData(
@@ -166,10 +175,12 @@ public class RealEstateDbContext : DbContext
         }
         );
 
+
         #endregion
-   
-   
+
         #region İletişim
+
+
 
 
         modelBuilder.Entity<Inquiry>().HasData(
@@ -185,6 +196,8 @@ public class RealEstateDbContext : DbContext
             CreatedAt = new DateTime(2026,01,09)
 
 
+
+
           },
           new Inquiry
           {
@@ -198,9 +211,16 @@ public class RealEstateDbContext : DbContext
           }
 
 
+
+
         );
            
         #endregion
+
+       
+   
+   
+       
 
            
 
