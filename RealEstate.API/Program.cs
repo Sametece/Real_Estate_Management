@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RealEstate.Data;
+using RealEstate.Data.Abstract;
+using RealEstate.Data.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,9 @@ if (string.IsNullOrEmpty(connectionString))
 }
 builder.Services.AddDbContext<RealEstateDbContext>(options => options.UseSqlite(connectionString));
 
-
+//Merkezi Kaydetme
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 
 
