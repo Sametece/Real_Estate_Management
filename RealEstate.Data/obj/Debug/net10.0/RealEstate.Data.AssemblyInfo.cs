@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RealEstate.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c6516952c06ee8a6213f0602311fea4c4846226")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4323f632424bffb5199dae94d2b6dfa6369e4288")]
 [assembly: System.Reflection.AssemblyProductAttribute("RealEstate.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RealEstate.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

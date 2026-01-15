@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "PeM/Txb0x3c=",
+  "dgSpecHash": "1srmvY14uJ4=",
   "success": true,
   "projectFilePath": "C:\\Users\\fe_ne\\Documents\\GitHub\\Real Estate Management API\\Real_Estate_Management\\RealEstate.API\\RealEstate.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fe_ne\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\fe_ne\\.nuget\\packages\\linqkit.core\\1.2.9\\linqkit.core.1.2.9.nupkg.sha512",
+    "C:\\Users\\fe_ne\\.nuget\\packages\\linqkit.microsoft.entityframeworkcore\\10.0.9\\linqkit.microsoft.entityframeworkcore.10.0.9.nupkg.sha512",
     "C:\\Users\\fe_ne\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
     "C:\\Users\\fe_ne\\.nuget\\packages\\microsoft.build\\17.7.2\\microsoft.build.17.7.2.nupkg.sha512",
     "C:\\Users\\fe_ne\\.nuget\\packages\\microsoft.build.framework\\17.14.28\\microsoft.build.framework.17.14.28.nupkg.sha512",

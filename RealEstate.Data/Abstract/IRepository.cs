@@ -42,13 +42,12 @@ public interface IRepository<T> where T : class
     /// <param name="asExpanded"></param>
     /// <param name="includes"></param>
     /// <returns></returns>
-    Task<T> GetAllAsync (
-         Expression<Func<T, bool>> predicate = null!,
-        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!,
-        bool showIsDeleted = false,
-        bool asExpanded = false,
-        params Func<IQueryable<T>, IQueryable<T>>[] includes
-    );
+    Task<IEnumerable<T>> GetAllAsync(
+    Expression<Func<T, bool>> predicate = null!,
+    Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null!,
+    bool showIsDeleted = false,
+    bool asExpanded = false,
+    params Func<IQueryable<T>, IQueryable<T>>[] includes);
     
     /// <summary>
     /// Entitylerdeki kayıt row sayısını verir
