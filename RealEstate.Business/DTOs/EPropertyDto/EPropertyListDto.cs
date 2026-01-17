@@ -20,4 +20,6 @@ public class EPropertyListDto
     public PropertyStatus Status { get; set; }
 
     public string PropertyTypeName { get; set; } = null!;
+   
+   public string? CoverImage { get; set; }
 }
