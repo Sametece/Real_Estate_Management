@@ -12,7 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mapping\" />
+    <Folder Include="Abstract\" />
+    <Folder Include="Concrete\" />
+    <Folder Include="DTOs\PropertyTypeDto\" />
+    <Folder Include="DTOs\ResponseDto\" />
   </ItemGroup>
 
   <ItemGroup>

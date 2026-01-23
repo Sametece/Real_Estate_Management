@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RealEstate.Business.Mapping;
 using RealEstate.Data;
 using RealEstate.Data.Abstract;
 using RealEstate.Data.Concrete;
@@ -24,7 +25,9 @@ builder.Services.AddDbContext<RealEstateDbContext>(options => options.UseSqlite(
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+//mapleme
 
+builder.Services.AddAutoMapper(typeof(EPropertyProfile).Assembly);
 
 
 
