@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using RealEstate.Entity.Concrete;
@@ -6,18 +7,18 @@ using RealEstate.Entity.Enum;
 
 namespace RealEstate.Data;
 
-public class RealEstateDbContext : DbContext
+public class RealEstateDbContext : IdentityDbContext<AppUser, AppRole, int>
 {
-    public RealEstateDbContext(DbContextOptions<RealEstateDbContext> options):base(options)
+    public RealEstateDbContext(DbContextOptions<RealEstateDbContext> options) : base(options)
     {
-        
     }
-   public DbSet<EProperty> eProperties { get; set; } 
-   public DbSet<Inquiry> Inquiries {get; set;}
 
-   public DbSet<PropertyType> propertyTypes {get; set;}
+    public DbSet<EProperty> EProperties { get; set; }
+    public DbSet<Inquiry> Inquiries { get; set; }
+    public DbSet<PropertyType> PropertyTypes { get; set; }
+    public DbSet<PropertyImage> PropertyImages { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
-   public DbSet<PropertyImage> propertyImages { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
@@ -27,204 +28,121 @@ public class RealEstateDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
 
-        modelBuilder.Entity<EProperty>()
-                                       .HasQueryFilter(x => !x.IsDeleted); // Soft Delete için
-   
-      
-        #region Emlak Tipleri
-             
-             var propertyTypes = new PropertyType []
-             {
-                 new PropertyType { Id =1 , Name = "Daire", Description = "Satılık Daire ", CreatedAt =new DateTime(2026,01,09)},
-                 new PropertyType { Id = 2, Name = "Daire", Description= "Kiralık Daire", CreatedAt =new DateTime(2026,01,09)  },
-                 new PropertyType{ Id = 3, Name = "Villa", Description= "Kiralık Villa", CreatedAt =new DateTime(2026,01,09)  },
-                 new PropertyType{Id = 4, Name = "Dükkan", Description= "Satılık Dükkan", CreatedAt =new DateTime(2026,01,09) },
-                 new PropertyType{Id = 5, Name = "Ofis", Description= "Satılık Ofis", CreatedAt =new DateTime(2026,01,09)    },
-                 new PropertyType{ Id = 6, Name = "Arsa", Description= "Satılık Arsa", CreatedAt =new DateTime(2026,01,09)   },
-                 new PropertyType{Id = 7, Name = "İşyeri", Description= "Kiralık İşyeri", CreatedAt =new DateTime(2026,01,09)}
-             };
-             modelBuilder.Entity<PropertyType>().HasData(propertyTypes);
+        // Global Query Filters for Soft Delete
+        modelBuilder.Entity<EProperty>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<PropertyType>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<PropertyImage>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<Inquiry>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<RefreshToken>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<AppUser>().HasQueryFilter(x => !x.IsDeleted);
 
-        #endregion
+        // Entity Configurations
+        ConfigureEProperty(modelBuilder);
+        ConfigurePropertyType(modelBuilder);
+        ConfigurePropertyImage(modelBuilder);
+        ConfigureInquiry(modelBuilder);
+        ConfigureRefreshToken(modelBuilder);
+        ConfigureAppUser(modelBuilder);
+    }
 
-        #region Emlak İlanı
-
-
-        var  eProperties = new EProperty []
+    private void ConfigureEProperty(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<EProperty>(entity =>
         {
-            new EProperty
-            {
-        Id = 1,
-        Title = "Deniz Manzaralı 3+1 Satılık Daire",
-        Description = "Adalar manzaralı, geniş ve ferah satılık daire",
-        Price = 3_250_000,
-        Address = "Backend Mahallesi",
-        City = "İstanbul",
-        District = "Kartal",
-        Rooms = 3,
-        Area = 135,
-        YearBuilt = 2018,
-        Floor = 5,
-        Status = PropertyStatus.Available,
-        PropertyTypeId = 1, // Satılık Daire
-        CreatedAt = new DateTime(2026,01,09),
-        AgentId = 1,
-        IsDeleted = false
-         },
-           new EProperty
-          {
-        Id = 2,
-        Title = "Deniz Manzaralı 1+1 Kiralık Daire",
-        Description = "Site içerisinde, güvenlikli kiralık daire",
-        Price = 18_000,
-        Address = "Backend Mahallesi",
-        City = "İstanbul",
-        District = "Maltepe",
-        Rooms = 1,
-        Area = 60,
-        YearBuilt = 2020,
-        Floor = 3,
-        Status = PropertyStatus.Rented,
-        PropertyTypeId = 2, // Kiralık Daire
-        CreatedAt = new DateTime(2026,01,09),
-        AgentId = 2,
-        IsDeleted = false
-         },
-           new EProperty
-         {
-        Id = 3,
-        Title = "Bahçeli Kiralık Villa",
-        Description = "Müstakil bahçeli, havuzlu villa",
-        Price = 55_000,
-        Address = "Villa Sokak",
-        City = "İstanbul",
-        District = "Beykoz",
-        Rooms = 1,
-        Area = 60,
-        YearBuilt = 2020,
-        Floor = 3,
-        Status = PropertyStatus.Rented,
-        PropertyTypeId = 3, // Kiralık Villa
-        CreatedAt = new DateTime(2026,01,09),
-        AgentId = 2,
-        IsDeleted = false
-         },
-          new EProperty
-          {
-        Id = 4,
-        Title = "Merkezi Konumda Satılık Dükkan",
-        Description = "Cadde üzerinde, yüksek yaya trafiği",
-        Price = 6_500_000,
-        Address = "Çarşı Caddesi",
-        City = "İstanbul",
-        District = "Kadıköy",
-         Rooms = 1,
-        Area = 60,
-        YearBuilt = 2024,
-        Floor = 3,
-        Status = PropertyStatus.Sold,
-        PropertyTypeId = 4, // Satılık Dükkan
-        CreatedAt = new DateTime(2026,01,09),
-        AgentId = 3,
-        IsDeleted = false
-         }
-         };
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.Description).IsRequired().HasMaxLength(5000);
+            entity.Property(e => e.Price).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.Area).HasColumnType("decimal(10,2)");
+            entity.Property(e => e.Address).IsRequired().HasMaxLength(500);
+            entity.Property(e => e.City).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.District).HasMaxLength(100);
 
-       modelBuilder.Entity<EProperty>().HasData(eProperties);
-   
-        #endregion
+            // Relationships
+            entity.HasOne(e => e.PropertyType)
+                  .WithMany(pt => pt.EProperties)
+                  .HasForeignKey(e => e.PropertyTypeId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
+            entity.HasMany(e => e.Images)
+                  .WithOne(pi => pi.Property)
+                  .HasForeignKey(pi => pi.PropertyId)
+                  .OnDelete(DeleteBehavior.Cascade);
 
-        #region Emlak Resimleri
-         
-         modelBuilder.Entity<PropertyImage>().HasData(
-        new PropertyImage
+            entity.HasMany(e => e.Inquiries)
+                  .WithOne(i => i.Property)
+                  .HasForeignKey(i => i.PropertyId)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+    }
+
+    private void ConfigurePropertyType(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PropertyType>(entity =>
         {
-           Id =1,
-           ImageUrl = "https://example.com/property1-1.jpg",
-            IsPrimary= true,
-           PropertyId = 1 ,
-            CreatedAt = new DateTime(2026,01,09)
-           
-        },
-        new PropertyImage
+            entity.HasKey(pt => pt.Id);
+            entity.Property(pt => pt.Name).IsRequired().HasMaxLength(100);
+            entity.Property(pt => pt.Description).HasMaxLength(500);
+        });
+    }
+
+    private void ConfigurePropertyImage(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PropertyImage>(entity =>
         {
-           Id =2,
-           ImageUrl = "https://example.com/property1-2.jpg",
-           IsPrimary= true,
-           PropertyId = 1,
-           CreatedAt = new DateTime(2026,01,09)
-        },
-         new PropertyImage
+            entity.HasKey(pi => pi.Id);
+            entity.Property(pi => pi.ImageUrl).IsRequired().HasMaxLength(1000);
+        });
+    }
+
+    private void ConfigureInquiry(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Inquiry>(entity =>
         {
-            Id = 3,
-            ImageUrl = "https://example.com/property2-1.jpg",
-            IsPrimary= true,
-            PropertyId = 2,
-            CreatedAt = new DateTime(2026,01,09)
-        },
-         new PropertyImage
+            entity.HasKey(i => i.Id);
+            entity.Property(i => i.Name).IsRequired().HasMaxLength(100);
+            entity.Property(i => i.Email).IsRequired().HasMaxLength(255);
+            entity.Property(i => i.Phone).HasMaxLength(20);
+            entity.Property(i => i.Message).IsRequired().HasMaxLength(1000);
+        });
+    }
+
+    private void ConfigureRefreshToken(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<RefreshToken>(entity =>
         {
-            Id = 4,
-            ImageUrl = "https://example.com/property2-2.jpg",
-            IsPrimary= true,
-            PropertyId = 2,
-            CreatedAt = new DateTime(2026,01,09)
-        }
-        );
+            entity.HasKey(rt => rt.Id);
+            entity.Property(rt => rt.Token).IsRequired().HasMaxLength(500);
+            entity.Property(rt => rt.ReasonRevoked).HasMaxLength(200);
+            entity.Property(rt => rt.ReplacedByToken).HasMaxLength(500);
 
+            entity.HasOne(rt => rt.User)
+                  .WithMany(u => u.RefreshTokens)
+                  .HasForeignKey(rt => rt.UserId)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+    }
 
-        #endregion
+    private void ConfigureAppUser(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AppUser>(entity =>
+        {
+            entity.Property(u => u.FirstName).IsRequired().HasMaxLength(50);
+            entity.Property(u => u.LastName).IsRequired().HasMaxLength(50);
+            entity.Property(u => u.ProfilePicture).HasMaxLength(1000);
+            entity.Property(u => u.AgencyName).HasMaxLength(200);
+            entity.Property(u => u.LicenseNumber).HasMaxLength(50);
 
-        #region İletişim
+            entity.HasMany(u => u.Properties)
+                  .WithOne()
+                  .HasForeignKey(p => p.AgentId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
-
-
-
-        modelBuilder.Entity<Inquiry>().HasData(
-         
-          new Inquiry
-          {
-             Id =1,
-            Name = "Samet Ece",
-            Email = "SametEce@Backend.com",
-            Message = "Bu ilan hakkında bilgi almak istiyorum.",
-            Status = InquiryStatus.New,
-            PropertyId = 1,
-            CreatedAt = new DateTime(2026,01,09)
-
-
-
-
-          },
-          new Inquiry
-          {
-             Id =2,
-            Name = "Ece",
-            Email = "Ece@Backend.com",
-            Message = "Kira Şartları Nedir?",
-            Status = InquiryStatus.Contacted,
-            PropertyId = 2,
-            CreatedAt = new DateTime(2026,01,09)
-          }
-
-
-
-
-        );
-           
-        #endregion
-
-       
-   
-   
-       
-
-           
-
-            
-       
+            entity.HasMany(u => u.Inquiries)
+                  .WithOne()
+                  .HasForeignKey(i => i.UserId)
+                  .OnDelete(DeleteBehavior.SetNull);
+        });
     }
 }

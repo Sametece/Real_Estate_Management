@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "/ldG8w56bns=",
+  "dgSpecHash": "EKC6u7qIrvs=",
   "success": true,
   "projectFilePath": "C:\\Users\\fe_ne\\Documents\\GitHub\\Real Estate Management API\\Real_Estate_Management\\RealEstate.Business\\RealEstate.Business.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fe_ne\\.nuget\\packages\\automapper\\15.1.0\\automapper.15.1.0.nupkg.sha512",
+    "C:\\Users\\fe_ne\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
+    "C:\\Users\\fe_ne\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
+    "C:\\Users\\fe_ne\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "C:\\Users\\fe_ne\\.nuget\\packages\\linqkit.core\\1.2.9\\linqkit.core.1.2.9.nupkg.sha512",
     "C:\\Users\\fe_ne\\.nuget\\packages\\linqkit.microsoft.entityframeworkcore\\10.0.9\\linqkit.microsoft.entityframeworkcore.10.0.9.nupkg.sha512",
     "C:\\Users\\fe_ne\\.nuget\\packages\\microsoft.data.sqlite.core\\10.0.0\\microsoft.data.sqlite.core.10.0.0.nupkg.sha512",

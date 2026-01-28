@@ -60,6 +60,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[15.1.0, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.3.1, )"
             }
           },
           "imports": [

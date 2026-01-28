@@ -6,5 +6,6 @@ namespace RealEstate.Business.DTOs.Inquiry;
 public class InquiryAdminUpdateDto
 {  
     //Durum yönetimi için 1-2-3-4
-   public InquiryStatus Status { get; set; }
+    public int Id { get; set; }
+    public InquiryStatus Status { get; set; }
 }

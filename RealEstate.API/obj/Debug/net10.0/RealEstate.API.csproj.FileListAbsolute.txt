@@ -212,3 +212,10 @@ C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Managemen
 C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\obj\Debug\net10.0\RealEstate.API.pdb
 C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\obj\Debug\net10.0\RealEstate.API.genruntimeconfig.cache
 C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\obj\Debug\net10.0\ref\RealEstate.API.dll
+C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\bin\Debug\net10.0\AutoMapper.dll
+C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\bin\Debug\net10.0\LinqKit.Core.dll
+C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\bin\Debug\net10.0\LinqKit.Microsoft.EntityFrameworkCore.dll
+C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\fe_ne\Documents\GitHub\Real Estate Management API\Real_Estate_Management\RealEstate.API\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll

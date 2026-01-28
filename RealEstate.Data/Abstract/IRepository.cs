@@ -13,6 +13,13 @@ public interface IRepository<T> where T : class
     Task<T> GetAsync(int id);
 
     /// <summary>
+    /// Id'ye göre tek bir nesne getirme (alternatif metod)
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<T> GetByIdAsync(int id);
+
+    /// <summary>
     /// Filtreleyerek tek bir nesne getirme 
     /// </summary>
     /// <param name="predicate"></param>
@@ -83,6 +90,12 @@ public interface IRepository<T> where T : class
     void Update(T entity);
     
     /// <summary>
+    /// Bir nesneneyi güncelleme (async)
+    /// </summary>
+    /// <param name="entity"></param>
+    Task UpdateAsync(T entity);
+    
+    /// <summary>
     /// Toplu güncelleme operasyonu için
     /// </summary>
     /// <param name="entities"></param>
@@ -93,6 +106,12 @@ public interface IRepository<T> where T : class
     /// </summary>
     /// <param name="entity"></param>
     void Remove(T entity);
+
+    /// <summary>
+    /// Bir nesneyi Silmek için (async)
+    /// </summary>
+    /// <param name="entity"></param>
+    Task DeleteAsync(T entity);
 
     //Sayfalama operasyonu
     
@@ -116,4 +135,5 @@ public interface IRepository<T> where T : class
         bool asExpanded = false,
         params Func<IQueryable<T>, IQueryable<T>>[] includes
     );
+    Task GetByIdAsync(int id, string[] includes);
 }
